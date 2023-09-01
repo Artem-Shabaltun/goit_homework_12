@@ -196,6 +196,7 @@ save_address_book(address_book, 'address_book.pkl')
 restored_address_book = load_address_book('address_book.pkl')
 
 if __name__ == "__main__":
+
     name = Name('Nick')
     phone = Phone('987654321')
     rec = Record(name, phone)
@@ -210,4 +211,37 @@ if __name__ == "__main__":
     assert len(ab['Nick'].phones) > 0
     assert isinstance(ab['Nick'].phones[0], Phone)
     assert ab['Nick'].phones[0].value == '987654321'
-    print('All Ok)')
+    print('Test 1 : OK')
+
+    name = Name('Art')
+    phone = Phone('023456789')
+    rec = Record(name, phone)
+    ab = ADDRESSBOOK()
+    ab.add_record(rec)
+    ab['Art'] = rec
+    ab['Art'].add_phone('023456789')
+
+    assert isinstance(ab['Art'], Record)
+    assert isinstance(ab['Art'].name, Name)
+    assert isinstance(ab['Art'].phones, list)
+    assert len(ab['Art'].phones) > 0
+    assert isinstance(ab['Art'].phones[0], Phone)
+    assert ab['Art'].phones[0].value == '023456789'
+    print('Test 2 : OK')
+
+    name = Name('Alice')
+    phone = Phone('555555555')
+    rec = Record(name, phone)
+    ab = ADDRESSBOOK()
+    ab.add_record(rec)
+    ab['Alice'] = rec
+    ab['Alice'].add_phone('555555555')
+
+    assert isinstance(ab['Alice'], Record)
+    assert isinstance(ab['Alice'].name, Name)
+    assert isinstance(ab['Alice'].phones, list)
+    assert len(ab['Alice'].phones) > 0
+    assert isinstance(ab['Alice'].phones[0], Phone)
+    assert ab['Alice'].phones[0].value == '555555555'
+    print('Test 3 : OK')
+    
