@@ -194,3 +194,20 @@ save_address_book(address_book, 'address_book.pkl')
 
 # Відновлення адресної книги з диска
 restored_address_book = load_address_book('address_book.pkl')
+
+if __name__ == "__main__":
+    name = Name('Nick')
+    phone = Phone('987654321')
+    rec = Record(name, phone)
+    ab = ADDRESSBOOK()
+    ab.add_record(rec)
+    ab['Nick'] = rec
+    ab['Nick'].add_phone('987654321')
+
+    assert isinstance(ab['Nick'], Record)
+    assert isinstance(ab['Nick'].name, Name)
+    assert isinstance(ab['Nick'].phones, list)
+    assert len(ab['Nick'].phones) > 0
+    assert isinstance(ab['Nick'].phones[0], Phone)
+    assert ab['Nick'].phones[0].value == '987654321'
+    print('All Ok)')
