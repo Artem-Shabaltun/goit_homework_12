@@ -1,5 +1,6 @@
 from collections import UserDict
 from datetime import datetime
+import pickle
 
 
 # Клас для книги контактів
@@ -19,7 +20,22 @@ class ADDRESSBOOK(UserDict):
             return self.data[key]
         else:
             raise StopIteration
+        
+def search_by_name(self, name):
+        results = []
+        for record in self.data.values():
+            if name in record.name.value:
+                results.append(record)
+        return results
 
+def search_by_phone(self, phone):
+        results = []
+        for record in self.data.values():
+            for record_phone in record.phones:
+                if phone in record_phone.value:
+                    results.append(record)
+                    break  # Припиняє пошук, якщо пошук цього запису здійснено
+        return results
 
 # Базовий клас для полів (ім'я, телефон, емейл)
 class Field:
@@ -130,7 +146,17 @@ class Birthday(Field):
             raise ValueError("Incorrect Birthday")
         self.value = value
 
+# Зберігання адресної книги до файлу
+def save_address_book(address_book, filename):
+    with open(filename, 'wb') as file:
+        pickle.dump(address_book, file)
 
+# Завантаження адресної книги з файлу
+def load_address_book(filename):
+    with open(filename, 'rb') as file:
+        return pickle.load(file)
+    
+#Створення і заповнення адресної книги
 address_book = ADDRESSBOOK()
 
 record1 = Record("Art")
@@ -163,11 +189,8 @@ address_book.add_record(record1)
 address_book.add_record(record2)
 address_book.add_record(record3)
 
-# Перевірки та виведення результатів
-for record in address_book:
-    print("Name:", record.name.value)
-    print("Phones:", record.phones)
-    print("Emails:", [email.value for email in record.emails])
-    print("Birthday:", record.birthday.value if record.birthday else "N/A")
-    print("Days to Birthday:", record.calculate_days_to_birthday())
-    print()
+# Зберігання адресної книги на диск
+save_address_book(address_book, 'address_book.pkl')
+
+# Відновлення адресної книги з диска
+restored_address_book = load_address_book('address_book.pkl')
