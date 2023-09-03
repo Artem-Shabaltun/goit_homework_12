@@ -160,9 +160,22 @@ if __name__ == "__main__":
 
     search_str = "11111111"
     search_result = loaded_address_book.search_by_name_or_phone(search_str)
-    if search_result:
-        print(f"Search results for '{search_str}':")
-        for result in search_result:
-            print(result.name.value)
-    else:
-        print(f"No results found for '{search_str}'")
+if search_result:
+    print("Результати пошуку:")
+    for result in search_result:
+        print(f"Ім'я: {result.name.value}")
+        print("Телефони:")
+        for phone in result.phones:
+            print(f"- {phone.value}")
+        print("Електронні адреси:")
+        for email in result.emails:
+            print(f"- {email.value}")
+        print(f"Дні до дня народження: {result.calculate_days_to_birthday()}")
+        print()
+else:
+    print("Нічого не знайдено.")
+
+
+
+
+  
